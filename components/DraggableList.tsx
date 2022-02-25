@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
     ScaleDecorator
 } from "react-native-draggable-flatlist";
-import data from '../components/data/data.json'
+import data from '../data/data.json'
 
+import { IForm } from '../interface/IForm';
 
-const NUM_ITEMS = 20;
+const NUM_ITEMS = data.length;
 function getColor(i: number) {
   const multiplier = 255 / (NUM_ITEMS - 1);
   const colorVal = i * multiplier;
@@ -17,26 +18,32 @@ function getColor(i: number) {
 type IItem = {
   key: string;
   label: string;
-  title: string;
+  title?: string;
   height: number;
   width: number;
   backgroundColor: string;
 }
+const getInitialData = (formData: IForm[] ) => {
+  const initialData: IItem[] = [...Array(NUM_ITEMS)].map((d, index) => {
+    const backgroundColor = getColor(index);
+    return {
+      key: `item-${index}`,
+      label: String(index) + "",
+      height: 100,
+      title: formData[index].title,
+      width: 60 + Math.random() * 40,
+      backgroundColor,
+    };
+  });
+  return initialData;
+}
 
-const initialData: IItem[] = [...Array(NUM_ITEMS)].map((d, index) => {
-  const backgroundColor = getColor(index);
-  return {
-    key: `item-${index}`,
-    label: String(index) + "",
-    height: 100,
-    title: data[index],
-    width: 60 + Math.random() * 40,
-    backgroundColor,
-  };
-});
 
-export const DraggableList = () => {
-  const [data, setData] = useState(initialData);
+type IProps = {
+  formData: IForm[] 
+}
+export const DraggableList: FC<IProps>  = (props: IProps )=> {
+  const [data, setData] = useState(getInitialData(props.formData));
   const windowWidth = useWindowDimensions().width;
   const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
     return (
