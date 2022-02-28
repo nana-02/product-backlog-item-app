@@ -1,9 +1,11 @@
+// フォーム
 export type IForm = {
   id: number,
   title?: string,
   DOD?: string
 }
 
+// アイテム
 export type IItem = {
   key: string;
   label: string;
@@ -12,3 +14,9 @@ export type IItem = {
   width: number;
   backgroundColor: string;
 }
+
+// アプリストア
+export type IAppStore = {
+  form?: IForm[];
+  setFormData: (newForm: IForm[]) => {};
+};

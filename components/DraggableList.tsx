@@ -1,25 +1,29 @@
-import React, { FC, useState, useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
+import React, { FC } from 'react';
+// component
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
     ScaleDecorator
 } from "react-native-draggable-flatlist";
+// interface
 import { IForm, IItem } from '../interface/IDraggableList';
+// utils
+import { uuid, getWindowWidth } from '../utils/UDraggableList';
+
 
 type IProps = {
-  listData: IItem[];
-  handleInject: (dataList: IForm[]) => void;
+  ordableList: IItem[];
+  setFormData: (dataList: IForm[]) => void;
 }
 export const DraggableList: FC<IProps>  = (props: IProps )=> {
-  const windowWidth = useWindowDimensions().width;
-
-  const handleSetData = (data: IItem[]) => {
-    const array:IForm[] = [];
+  // storeにformリストデータのセットハンドラ
+  const handleSetFormData = (data: IItem[]) => {
+    const formList:IForm[] = [];
     data.forEach(element => {
-      let fuga: IForm = {id: 1, title: element.title, DOD: ''};
-      array.push(fuga);
+      let form: IForm = {id: uuid.v1(), title: element.title, DOD: ''};
+      formList.push(form);
     });
-    props?.handleInject(array);
+    props?.setFormData(formList);
   }
 
   const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
@@ -30,7 +34,7 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
           disabled={isActive}
           style={[
             styles.rowItem,
-            { backgroundColor: isActive ? "red" : item.backgroundColor, width: windowWidth },
+            { backgroundColor: isActive ? "red" : item.backgroundColor, width: getWindowWidth },
           ]}
         >
           <Text style={styles.text}>{item.title}</Text>
@@ -42,8 +46,8 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
   return (
     <View style={[styles.view]}>
       <DraggableFlatList
-        data={props.listData}
-        onDragEnd={({ data }) => handleSetData(data)}
+        data={props.ordableList}
+        onDragEnd={({ data }) => handleSetFormData(data)}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
       />
