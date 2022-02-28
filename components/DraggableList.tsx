@@ -1,43 +1,27 @@
-import React, { useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
     ScaleDecorator
 } from "react-native-draggable-flatlist";
-import data from '../components/data/data.json'
+import { IForm, IItem } from '../interface/IDraggableList';
 
-
-const NUM_ITEMS = 20;
-function getColor(i: number) {
-  const multiplier = 255 / (NUM_ITEMS - 1);
-  const colorVal = i * multiplier;
-  return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`;
+type IProps = {
+  listData: IItem[];
+  handleInject: (dataList: IForm[]) => void;
 }
-
-type IItem = {
-  key: string;
-  label: string;
-  title: string;
-  height: number;
-  width: number;
-  backgroundColor: string;
-}
-
-const initialData: IItem[] = [...Array(NUM_ITEMS)].map((d, index) => {
-  const backgroundColor = getColor(index);
-  return {
-    key: `item-${index}`,
-    label: String(index) + "",
-    height: 100,
-    title: data[index],
-    width: 60 + Math.random() * 40,
-    backgroundColor,
-  };
-});
-
-export const DraggableList = () => {
-  const [data, setData] = useState(initialData);
+export const DraggableList: FC<IProps>  = (props: IProps )=> {
   const windowWidth = useWindowDimensions().width;
+
+  const handleSetData = (data: IItem[]) => {
+    const array:IForm[] = [];
+    data.forEach(element => {
+      let fuga: IForm = {id: 1, title: element.title, DOD: ''};
+      array.push(fuga);
+    });
+    props?.handleInject(array);
+  }
+
   const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
     return (
       <ScaleDecorator>
@@ -58,8 +42,8 @@ export const DraggableList = () => {
   return (
     <View style={[styles.view]}>
       <DraggableFlatList
-        data={data}
-        onDragEnd={({ data }) => setData(data)}
+        data={props.listData}
+        onDragEnd={({ data }) => handleSetData(data)}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
       />
