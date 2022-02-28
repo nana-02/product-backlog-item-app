@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { TextInput, Button } from 'react-native';
-import { IForm } from '../interface/IForm';
+import { TextInput, Button, Text } from 'react-native';
+import { IForm } from '../interface/IDraggableList';
 
 type Iprops = {
   appStore?: {
@@ -23,6 +23,8 @@ export default class AppContainer extends Component<Iprops, Istate> {
     this.state = {
       title: '',
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleTitle = (text: string) => {
     this.setState({
@@ -31,11 +33,12 @@ export default class AppContainer extends Component<Iprops, Istate> {
   };
 
   handleSubmit = () => {
-    const dataList = this.props.appStore!.form;
+    const dataList = this.props.appStore!.form?.slice();
     dataList?.push({id: 1, title: this.state.title});
-    console.log(this.state.title);
     dataList && this.props.appStore?.setFormData(dataList);
-    console.log(this.props.appStore?.form);
+    this.setState({
+      title: ''
+    })
   }
 
   render() {
@@ -47,6 +50,7 @@ export default class AppContainer extends Component<Iprops, Istate> {
           onChangeText={this.handleTitle}
           value={this.state.title}
         />
+        <Text>{this.state.title}</Text>
         <Button
           title="Press me"
           onPress={() => this.handleSubmit()}

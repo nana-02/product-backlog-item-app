@@ -1,11 +1,11 @@
 import { action, observable, makeObservable} from 'mobx';
 import defaultForm from '../data/defaultForm.json'
-import { IForm } from '../interface/IForm'
+import { IForm } from '../interface/IDraggableList'
 
 class AppStore {
-  @observable form: IForm[] = defaultForm;
+  @observable.ref form: IForm[] = defaultForm;
 
-  @action setFormData(newForm: IForm[]){
+  @action('走ってる?') setFormData(newForm: IForm[]){
     this.form = newForm;
   }
 
