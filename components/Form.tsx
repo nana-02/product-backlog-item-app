@@ -11,7 +11,7 @@ type Iprops = {
 };
 
 type Istate = {
-  title?: string;
+  title: string;
 };
 
 @inject('appStore')
@@ -33,12 +33,11 @@ export default class AppContainer extends Component<Iprops, Istate> {
   };
 
   handleSubmit = () => {
-    const form = this.props.appStore!.form;
+    const form = this.props.appStore!.form?.slice();;
     if (!form) return;
-    const dataList = form.slice();
     const keyword = `item-${form.length + 1}`;
-    dataList?.push({key: keyword, title: this.state.title});
-    dataList && this.props.appStore?.setFormData(dataList);
+    form.push({key: keyword, label: '', height: 0, width: 0, title: this.state.title, backgroundColor: ''});
+    this.props.appStore?.setFormData(form);
     this.setState({
       title: ''
     });

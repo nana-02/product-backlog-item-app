@@ -7,18 +7,18 @@ import { IOrderableListParam, IAppStore } from '../interface/IDraggableList';
 // utils
 import { getOrderableListData } from '../utils/UDraggableList';
 
-
 type Iprops = {
   appStore?: IAppStore;
 };
 
-type Istate = {
-  title?: string;
-};
-
 @inject('appStore')
 @observer
-export default class DraggableListWrap extends React.Component<Iprops, Istate> {
+export default class DraggableListWrap extends React.Component<Iprops> {
+  constructor(props: Iprops) {
+    super(props);
+
+    this.handleSetFormData = this.handleSetFormData.bind(this);
+  }
   // storeのformデータを更新するハンドラ
   handleSetFormData = (dataList: IOrderableListParam[]) => {
     dataList && this.props.appStore?.setFormData(dataList);

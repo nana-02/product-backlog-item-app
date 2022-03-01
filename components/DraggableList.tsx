@@ -12,12 +12,12 @@ import { getWindowWidth } from '../utils/UDraggableList';
 
 type IProps = {
   ordableList: IOrderableListParam[];
-  setFormData: (dataList: IOrderableListParam[]) => void;
+  setFormData: (orderableListParam: IOrderableListParam[]) => void;
 };
 export const DraggableList: FC<IProps> = (props: IProps) => {
   // storeにformリストデータのセットハンドラ
   const handleSetFormData = (orderableListParam: IOrderableListParam[]) => {
-    props?.setFormData(orderableListParam);
+    props.setFormData(orderableListParam);
   };
 
   const renderItem = ({

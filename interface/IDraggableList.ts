@@ -1,11 +1,11 @@
 // アイテム
 export type IOrderableListParam = {
   key: string;
-  label?: string;
+  label: string;
   title: string;
-  height?: number;
-  width?: number;
-  backgroundColor?: string;
+  height: number;
+  width: number;
+  backgroundColor: string;
 }
 
 // アプリストア

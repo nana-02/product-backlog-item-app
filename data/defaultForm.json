@@ -1,14 +1,26 @@
 [
   {
     "key": "item-1",
-    "title": "input product backlog items"
+    "title": "input product backlog items",
+    "label": "", 
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   },
   {   
     "key": "item-2",
-    "title": "user can sort items"
+    "title": "user can sort items",
+    "label": "", 
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   },
   {   
     "key": "item-3",
-    "title": "write definition of done"
+    "title": "write definition of done",
+    "label": "", 
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   }
 ]
