@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
@@ -8,18 +8,13 @@ import { IForm, IItem } from '../interface/IDraggableList';
 
 type IProps = {
   listData: IItem[];
-  handleInject: (dataList: IForm[]) => void;
+  handleInject: (dataList: IItem[]) => void;
 }
 export const DraggableList: FC<IProps>  = (props: IProps )=> {
   const windowWidth = useWindowDimensions().width;
 
   const handleSetData = (data: IItem[]) => {
-    const array:IForm[] = [];
-    data.forEach(element => {
-      let fuga: IForm = {id: 1, title: element.title, DOD: ''};
-      array.push(fuga);
-    });
-    props?.handleInject(array);
+    props?.handleInject(data);
   }
 
   const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {

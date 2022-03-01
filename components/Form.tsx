@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { TextInput, Button, Text } from 'react-native';
-import { IForm } from '../interface/IDraggableList';
+import { IForm, IItem } from '../interface/IDraggableList';
 
 type Iprops = {
   appStore?: {
-    form?: IForm[];
-    setFormData: (newForm: IForm[]) => {};
+    form?: IItem[];
+    setFormData: (newForm: IItem[]) => {};
   };
 };
 
@@ -33,12 +33,15 @@ export default class AppContainer extends Component<Iprops, Istate> {
   };
 
   handleSubmit = () => {
-    const dataList = this.props.appStore!.form?.slice();
-    dataList?.push({id: 1, title: this.state.title});
+    const form = this.props.appStore!.form;
+    if (!form) return;
+    const dataList = form.slice();
+    const keyword = `item-${form.length + 1}`;
+    dataList?.push({key: keyword, title: this.state.title, label: String(form.length + 1), height: 0, width: 0, backgroundColor: ''});
     dataList && this.props.appStore?.setFormData(dataList);
     this.setState({
       title: ''
-    })
+    });
   }
 
   render() {

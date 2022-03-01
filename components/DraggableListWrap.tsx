@@ -6,8 +6,8 @@ import { DraggableList } from '../components/DraggableList';
 
 type Iprops = {
   appStore?: {
-    form?: IForm[];
-    setFormData: (newForm: IForm[]) => {};
+    form?: IItem[];
+    setFormData: (newForm: IItem[]) => {};
   };
 };
 
@@ -24,7 +24,7 @@ export default class DraggableListWrap extends React.Component<Iprops, Istate> {
     return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`;
   }
 
-  getInitialData = (formData: IForm[]) => {
+  getInitialData = (formData: IItem[]) => {
     const initialData: IItem[] = [...Array(formData.length)].map((d, index) => {
       const backgroundColor = this.getColor(index, formData.length);
       return {
@@ -39,7 +39,7 @@ export default class DraggableListWrap extends React.Component<Iprops, Istate> {
     return initialData;
   }
 
-  handleInject = (dataList: IForm[]) => {
+  handleInject = (dataList: IItem[]) => {
     dataList && this.props.appStore?.setFormData(dataList);
   }
   render() {
