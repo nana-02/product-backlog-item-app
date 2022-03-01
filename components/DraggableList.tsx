@@ -6,27 +6,19 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 // interface
-import { IForm, IOrderableListParam } from '../interface/IDraggableList';
+import { IOrderableListParam } from '../interface/IDraggableList';
 // utils
 import { getWindowWidth } from '../utils/UDraggableList';
 
 type IProps = {
   ordableList: IOrderableListParam[];
-  setFormData: (dataList: IForm[]) => void;
+  setFormData: (dataList: IOrderableListParam[]) => void;
 };
 export const DraggableList: FC<IProps> = (props: IProps) => {
   // storeにformリストデータのセットハンドラ
   const handleSetFormData = (orderableListParam: IOrderableListParam[]) => {
-    const formList: IForm[] = [];
-    // こっちはこっちでorderableListParamで並べ替えないといけない。
-    orderableListParam.forEach((param) => {
-      let form: IForm = { id: param.key, title: param.title, DOD: '' };
-      formList.push(form);
-    });
-    props?.setFormData(formList);
+    props?.setFormData(orderableListParam);
   };
-
-  // 
 
   const renderItem = ({
     item,
@@ -63,6 +55,7 @@ export const DraggableList: FC<IProps> = (props: IProps) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   rowItem: {
     height: 50,

@@ -1,17 +1,14 @@
 [
-  {   
-    "id": 1,
-    "title": "input product backlog items",
-    "DOD": "add TextInput component"
+  {
+    "key": "item-1",
+    "title": "input product backlog items"
   },
   {   
-    "id": 2,
-    "title": "user can sort items",
-    "DOD": "add sort function"
+    "key": "item-2",
+    "title": "user can sort items"
   },
   {   
-    "id": 3,
-    "title": "write definition of done",
-    "DOD": "add TextInput component"
+    "key": "item-3",
+    "title": "write definition of done"
   }
 ]
