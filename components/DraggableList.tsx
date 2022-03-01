@@ -4,17 +4,17 @@ import DraggableFlatList, {
   RenderItemParams,
     ScaleDecorator
 } from "react-native-draggable-flatlist";
-import { IForm, IItem } from '../interface/IDraggableList';
+import { IItem } from '../interface/IDraggableList';
 
 type IProps = {
-  listData: IItem[];
-  handleInject: (dataList: IItem[]) => void;
+  items: IItem[];
+  setFormData: (dataList: IItem[]) => void;
 }
 export const DraggableList: FC<IProps>  = (props: IProps )=> {
   const windowWidth = useWindowDimensions().width;
 
-  const handleSetData = (data: IItem[]) => {
-    props?.handleInject(data);
+  const handleSetFormData = (data: IItem[]) => {
+    props?.setFormData(data);
   }
 
   const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
@@ -37,8 +37,8 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
   return (
     <View style={[styles.view]}>
       <DraggableFlatList
-        data={props.listData}
-        onDragEnd={({ data }) => handleSetData(data)}
+        data={props.items}
+        onDragEnd={({ data }) => handleSetFormData(data)}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
       />

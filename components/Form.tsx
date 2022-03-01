@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { TextInput, Button, Text } from 'react-native';
-import { IForm, IItem } from '../interface/IDraggableList';
+import { IAppStore } from '../interface/IDraggableList';
 
 type Iprops = {
-  appStore?: {
-    form?: IItem[];
-    setFormData: (newForm: IItem[]) => {};
-  };
+  appStore?: IAppStore;
 };
 
 type Istate = {
@@ -17,15 +14,10 @@ type Istate = {
 @inject('appStore')
 @observer
 export default class AppContainer extends Component<Iprops, Istate> {
-  constructor(props: Iprops) {
-    super(props);
+  state = {
+    title: '',
+  };
 
-    this.state = {
-      title: '',
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
   handleTitle = (text: string) => {
     this.setState({
       title: text,
@@ -36,13 +28,21 @@ export default class AppContainer extends Component<Iprops, Istate> {
     const form = this.props.appStore!.form;
     if (!form) return;
     const dataList = form.slice();
-    const keyword = `item-${form.length + 1}`;
-    dataList?.push({key: keyword, title: this.state.title, label: String(form.length + 1), height: 0, width: 0, backgroundColor: ''});
+    const index = String(form.length + 1);
+    const keyword = `item-${index}`;
+    dataList?.push({
+      key: keyword,
+      title: this.state.title,
+      label: index,
+      height: 0,
+      width: 0,
+      backgroundColor: '',
+    });
     dataList && this.props.appStore?.setFormData(dataList);
     this.setState({
-      title: ''
+      title: '',
     });
-  }
+  };
 
   render() {
     return (
@@ -54,10 +54,7 @@ export default class AppContainer extends Component<Iprops, Istate> {
           value={this.state.title}
         />
         <Text>{this.state.title}</Text>
-        <Button
-          title="Press me"
-          onPress={() => this.handleSubmit()}
-        />
+        <Button title="Press me" onPress={() => this.handleSubmit()} />
       </React.Fragment>
     );
   }

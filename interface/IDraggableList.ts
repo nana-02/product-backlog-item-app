@@ -1,9 +1,3 @@
-export type IForm = {
-  id: number,
-  title?: string,
-  DOD?: string
-}
-
 export type IItem = {
   key: string;
   label: string;
@@ -12,3 +6,8 @@ export type IItem = {
   width: number;
   backgroundColor: string;
 }
+
+export type IAppStore = {
+  form?: IItem[];
+  setFormData: (newForm: IItem[]) => {};
+};

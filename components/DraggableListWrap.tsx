@@ -1,14 +1,11 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { IForm, IItem } from '../interface/IDraggableList';
+import { IItem, IAppStore } from '../interface/IDraggableList';
 
 import { DraggableList } from '../components/DraggableList';
 
 type Iprops = {
-  appStore?: {
-    form?: IItem[];
-    setFormData: (newForm: IItem[]) => {};
-  };
+  appStore?: IAppStore;
 };
 
 type Istate = {
@@ -39,13 +36,14 @@ export default class DraggableListWrap extends React.Component<Iprops, Istate> {
     return initialData;
   }
 
-  handleInject = (dataList: IItem[]) => {
+  handleSetFormData = (dataList: IItem[]) => {
     dataList && this.props.appStore?.setFormData(dataList);
   }
+
   render() {
     if (this.props.appStore && this.props.appStore.form){
       return (
-        <DraggableList listData={this.getInitialData(this.props.appStore.form)} handleInject={this.handleInject}/>
+        <DraggableList items={this.getInitialData(this.props.appStore.form)} setFormData={this.handleSetFormData}/>
         )
       }
   }
