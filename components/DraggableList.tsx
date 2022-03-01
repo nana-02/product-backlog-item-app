@@ -17,7 +17,13 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
     props?.setFormData(data);
   }
 
-  const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
+  // 
+
+  const renderItem = ({
+    item,
+    drag,
+    isActive,
+  }: RenderItemParams<IItem>) => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
@@ -25,7 +31,10 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
           disabled={isActive}
           style={[
             styles.rowItem,
-            { backgroundColor: isActive ? "red" : item.backgroundColor, width: windowWidth },
+            {
+              backgroundColor: isActive ? 'red' : item.backgroundColor,
+              width: windowWidth,
+            },
           ]}
         >
           <Text style={styles.text}>{item.title}</Text>
@@ -44,22 +53,22 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   rowItem: {
     height: 50,
     width: 100,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   view: {
     marginTop: 20,
     height: 450,
-  }
+  },
 });
