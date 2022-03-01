@@ -1,18 +1,18 @@
 // フォーム
 export type IForm = {
-  id: number,
+  id: string,
   title?: string,
   DOD?: string
 }
 
 // アイテム
-export type IItem = {
+export type IOrderableListParam = {
   key: string;
   label: string;
   title?: string;
   height: number;
   width: number;
-  backgroundColor: string;
+  backgroundColor?: string;
 }
 
 // アプリストア

@@ -3,30 +3,36 @@ import React, { FC } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
-    ScaleDecorator
-} from "react-native-draggable-flatlist";
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
 // interface
-import { IForm, IItem } from '../interface/IDraggableList';
+import { IForm, IOrderableListParam } from '../interface/IDraggableList';
 // utils
-import { uuid, getWindowWidth } from '../utils/UDraggableList';
-
+import { getWindowWidth } from '../utils/UDraggableList';
 
 type IProps = {
-  ordableList: IItem[];
+  ordableList: IOrderableListParam[];
   setFormData: (dataList: IForm[]) => void;
-}
-export const DraggableList: FC<IProps>  = (props: IProps )=> {
+};
+export const DraggableList: FC<IProps> = (props: IProps) => {
   // storeにformリストデータのセットハンドラ
-  const handleSetFormData = (data: IItem[]) => {
-    const formList:IForm[] = [];
-    data.forEach(element => {
-      let form: IForm = {id: uuid.v1(), title: element.title, DOD: ''};
+  const handleSetFormData = (orderableListParam: IOrderableListParam[]) => {
+    const formList: IForm[] = [];
+    // こっちはこっちでorderableListParamで並べ替えないといけない。
+    orderableListParam.forEach((param) => {
+      let form: IForm = { id: param.key, title: param.title, DOD: '' };
       formList.push(form);
     });
     props?.setFormData(formList);
-  }
+  };
 
-  const renderItem = ({ item, drag, isActive }: RenderItemParams<IItem>) => {
+  // 
+
+  const renderItem = ({
+    item,
+    drag,
+    isActive,
+  }: RenderItemParams<IOrderableListParam>) => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
@@ -34,7 +40,10 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
           disabled={isActive}
           style={[
             styles.rowItem,
-            { backgroundColor: isActive ? "red" : item.backgroundColor, width: getWindowWidth },
+            {
+              backgroundColor: isActive ? 'red' : item.backgroundColor,
+              width: getWindowWidth,
+            },
           ]}
         >
           <Text style={styles.text}>{item.title}</Text>
@@ -53,22 +62,22 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   rowItem: {
     height: 50,
     width: 100,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   view: {
     marginTop: 20,
     height: 450,
-  }
+  },
 });

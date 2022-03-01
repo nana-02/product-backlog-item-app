@@ -5,7 +5,7 @@ import { IForm } from '../interface/IDraggableList'
 class AppStore {
   @observable.ref form: IForm[] = defaultForm;
 
-  @action('走ってる?') setFormData(newForm: IForm[]){
+  @action setFormData(newForm: IForm[]){
     this.form = newForm;
   }
 
