@@ -1,17 +1,26 @@
 [
-  {   
-    "id": 1,
+  {
+    "key": "item-1",
     "title": "input product backlog items",
-    "DOD": "add TextInput component"
+    "label": "1",
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   },
   {   
-    "id": 2,
+    "key": "item-2",
     "title": "user can sort items",
-    "DOD": "add sort function"
+    "label": "1",
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   },
   {   
-    "id": 3,
+    "key": "item-3",
     "title": "write definition of done",
-    "DOD": "add TextInput component"
+    "label": "1",
+    "height": 0,
+    "width": 0,
+    "backgroundColor": ""
   }
 ]

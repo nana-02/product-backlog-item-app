@@ -1,30 +1,21 @@
 import React, { FC } from 'react';
-// component
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
-  ScaleDecorator,
-} from 'react-native-draggable-flatlist';
-// interface
-import { IForm, IOrderableListParam } from '../interface/IDraggableList';
-// utils
-import { getWindowWidth } from '../utils/UDraggableList';
+    ScaleDecorator
+} from "react-native-draggable-flatlist";
+import { IItem } from '../interface/IDraggableList';
 
 type IProps = {
-  ordableList: IOrderableListParam[];
-  setFormData: (dataList: IForm[]) => void;
-};
-export const DraggableList: FC<IProps> = (props: IProps) => {
-  // storeにformリストデータのセットハンドラ
-  const handleSetFormData = (orderableListParam: IOrderableListParam[]) => {
-    const formList: IForm[] = [];
-    // こっちはこっちでorderableListParamで並べ替えないといけない。
-    orderableListParam.forEach((param) => {
-      let form: IForm = { id: param.key, title: param.title, DOD: '' };
-      formList.push(form);
-    });
-    props?.setFormData(formList);
-  };
+  items: IItem[];
+  setFormData: (dataList: IItem[]) => void;
+}
+export const DraggableList: FC<IProps>  = (props: IProps )=> {
+  const windowWidth = useWindowDimensions().width;
+
+  const handleSetFormData = (data: IItem[]) => {
+    props?.setFormData(data);
+  }
 
   // 
 
@@ -32,7 +23,7 @@ export const DraggableList: FC<IProps> = (props: IProps) => {
     item,
     drag,
     isActive,
-  }: RenderItemParams<IOrderableListParam>) => {
+  }: RenderItemParams<IItem>) => {
     return (
       <ScaleDecorator>
         <TouchableOpacity
@@ -42,7 +33,7 @@ export const DraggableList: FC<IProps> = (props: IProps) => {
             styles.rowItem,
             {
               backgroundColor: isActive ? 'red' : item.backgroundColor,
-              width: getWindowWidth,
+              width: windowWidth,
             },
           ]}
         >
@@ -55,7 +46,7 @@ export const DraggableList: FC<IProps> = (props: IProps) => {
   return (
     <View style={[styles.view]}>
       <DraggableFlatList
-        data={props.ordableList}
+        data={props.items}
         onDragEnd={({ data }) => handleSetFormData(data)}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
