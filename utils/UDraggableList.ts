@@ -1,6 +1,6 @@
 import { useWindowDimensions } from 'react-native';
 // interface
-import { IForm, IOrderableListParam } from '../interface/IDraggableList';
+import { IOrderableListParam } from '../interface/IDraggableList';
 
 // id生成
 export const uuid = require('uuid');
@@ -13,7 +13,7 @@ export const getColor = (i: number, length: number) => {
 };
 
 // Formデータからdraggableリスト用データに生計
-export const getOrderableListData = (formData: IForm[]) => {
+export const getOrderableListData = (formData: IOrderableListParam[]) => {
   const orderableList: IOrderableListParam[] = [...Array(formData.length)].map((d, index) => {
     const backgroundColor = getColor(index, formData.length);
     return {
@@ -26,19 +26,6 @@ export const getOrderableListData = (formData: IForm[]) => {
     };
   });
   return orderableList;
-};
-
-// Formデータからdraggableリスト用データに生計
-export const setOrderableListData = (formData: IForm, index: number) => {
-  const backgroundColor = getColor(index, index);
-    return {
-      key: `item-${index}`,
-      label: String(index) + '',
-      height: 100,
-      title: formData.title,
-      width: 60 + Math.random() * 40,
-      backgroundColor,
-    };
 };
 
 // window横幅を取得

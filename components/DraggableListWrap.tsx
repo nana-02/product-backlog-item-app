@@ -3,9 +3,10 @@ import { inject, observer } from 'mobx-react';
 // component
 import { DraggableList } from '../components/DraggableList';
 // interface
-import { IForm, IAppStore } from '../interface/IDraggableList';
+import { IOrderableListParam, IAppStore } from '../interface/IDraggableList';
 // utils
 import { getOrderableListData } from '../utils/UDraggableList';
+
 
 type Iprops = {
   appStore?: IAppStore;
@@ -19,7 +20,7 @@ type Istate = {
 @observer
 export default class DraggableListWrap extends React.Component<Iprops, Istate> {
   // storeのformデータを更新するハンドラ
-  handleSetFormData = (dataList: IForm[]) => {
+  handleSetFormData = (dataList: IOrderableListParam[]) => {
     dataList && this.props.appStore?.setFormData(dataList);
   };
 
