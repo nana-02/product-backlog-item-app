@@ -45,7 +45,13 @@ export default class TogglableForm extends Component<Iprops, Istate> {
     const dataList = form.slice();
     // 新規登録
     if (!this.props.isEdit) {
-      const index = String(form.length + 1);
+      let index;
+      // formが空の時は0番目
+      if (!form.length ) {
+        index = '0';
+      } else {
+        index = String(form.length + 1);
+      }
       const keyword = `item-${index}`;
       dataList?.push({
         id: uuidv4(),
@@ -86,7 +92,7 @@ export default class TogglableForm extends Component<Iprops, Istate> {
 
   handleDelete = (): IItem[] => {
     const newDataList = this.props.appStore!.form!.filter(
-      (data) => data.id !== this.state.uniqueId
+      (item) => item.id !== this.state.uniqueId
     );
     newDataList && this.props.appStore?.setFormData(newDataList);
     this.setState({
@@ -98,8 +104,8 @@ export default class TogglableForm extends Component<Iprops, Istate> {
   };
 
   handleSelectDropDownList = (value: string) => {
-    const array = this.props.appStore?.form?.slice();
-    const found = array!.find((element) => element.label === value);
+    const formItems = this.props.appStore?.form?.slice();
+    const found = formItems!.find((item) => item.label === value);
     if (!found) return;
     this.setState({
       title: found.title,
