@@ -17,8 +17,6 @@ export const DraggableList: FC<IProps>  = (props: IProps )=> {
     props?.setFormData(data);
   }
 
-  // 
-
   const renderItem = ({
     item,
     drag,

@@ -1,46 +1,50 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { TextInput, Button, Text } from 'react-native';
-import { IAppStore } from '../interface/IDraggableList';
+import { TextInput, Button } from 'react-native';
 
 type Iprops = {
-  appStore?: IAppStore;
+  title?: string;
+  dod?: string;
+  setTitle: (text: string) => void;
+  setDod: (text: string) => void;
+  submit: (title: string, dod: string) => void;
 };
 
 type Istate = {
-  title?: string;
+  title: string;
+  dod: string;
 };
 
 @inject('appStore')
 @observer
-export default class AppContainer extends Component<Iprops, Istate> {
-  state = {
-    title: '',
-  };
+export default class Form extends Component<Iprops, Istate> {
+  constructor(props: Iprops) {
+    super(props);
+    this.state = {
+      title: '',
+      dod: '',
+    };
+  }
 
   handleTitle = (text: string) => {
+    this.props.setTitle(text);
     this.setState({
-      title: text,
+      title: text
+    });
+  };
+  handleDod = (text: string) => {
+    this.props.setDod(text);
+    this.setState({
+      dod: text
     });
   };
 
   handleSubmit = () => {
-    const form = this.props.appStore!.form;
-    if (!form) return;
-    const dataList = form.slice();
-    const index = String(form.length + 1);
-    const keyword = `item-${index}`;
-    dataList?.push({
-      key: keyword,
-      title: this.state.title,
-      label: index,
-      height: 0,
-      width: 0,
-      backgroundColor: '',
-    });
-    dataList && this.props.appStore?.setFormData(dataList);
+    if (this.state.title === '' || this.state.dod === '') return;
+    this.props.submit(this.state.title, this.state.dod);
     this.setState({
       title: '',
+      dod: '',
     });
   };
 
@@ -51,9 +55,14 @@ export default class AppContainer extends Component<Iprops, Istate> {
           style={{ height: 40, width: 200 }}
           placeholder="Type here the title of item"
           onChangeText={this.handleTitle}
-          value={this.state.title}
+          value={this.props.title}
         />
-        <Text>{this.state.title}</Text>
+        <TextInput
+          style={{ height: 40, width: 200 }}
+          placeholder="Type here the definition of done"
+          onChangeText={this.handleDod}
+          value={this.props.dod}
+        />
         <Button title="Press me" onPress={() => this.handleSubmit()} />
       </React.Fragment>
     );
