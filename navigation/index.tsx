@@ -16,6 +16,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import TabThreeScreen from '../screens/TabThreeScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 // mobx
@@ -58,7 +59,6 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
   return (
     <Provider appStore={appStore}>
       <BottomTab.Navigator
@@ -93,6 +93,14 @@ function BottomTabNavigator() {
           component={TabTwoScreen}
           options={{
             title: 'Tab Two',
+            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          }}
+        />
+        <BottomTab.Screen
+          name="TabThree"
+          component={TabThreeScreen}
+          options={{
+            title: 'Tab Three',
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           }}
         />

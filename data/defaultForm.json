@@ -1,13 +1,16 @@
 [
   {
+    "id": "hogheohgoej",
     "key": "item-1",
     "title": "input product backlog items",
+    "dod": "sample",
     "label": "1",
     "height": 0,
     "width": 0,
     "backgroundColor": ""
   },
   {   
+    "id": "hogheohgoe",
     "key": "item-2",
     "title": "user can sort items",
     "label": "1",
@@ -16,6 +19,7 @@
     "backgroundColor": ""
   },
   {   
+    "id": "hogheohgo",
     "key": "item-3",
     "title": "write definition of done",
     "label": "1",
